@@ -1,0 +1,26 @@
+{"intents": [
+    {"tag": "greatings",
+    "patterns":["hello","hey","hi","good day","Greetings","what's up?","how is it going?"],
+    "responses":["Hello!","Hey!","What can I do for you?"]
+    },
+    {"tag": "goodbye",
+    "patterns":["cya","see you later","goodbye","I am leaving","Have a good day","bye?","cao","see ya"],
+    "responses":["Sad to see you go :(","Talk to you later!","Goodbye!"]
+    },
+    {"tag": "age",
+    "patterns":["how old","how old is chatbot","what is your age","how old are you","age?"],
+    "responses":["I am 20 years in robot age!","I am 20 and I enjoy learning new things"]
+    },
+    {"tag": "name",
+    "patterns":["what is your name","what should i call you","whats your name?","who are you?","Can you tell me what is your name?"],
+    "responses":["I am 20 years old in robot age!","I am 20 and I enjoy learning new things"]
+    },
+    {"tag": "hours",
+    "patterns":["when are you guys open","what are your hours","hours of operation?"],
+    "responses":["24/7/365"]
+    },
+    {"tag": "services",
+    "patterns":["what can you do for me?","what do you offer?","how can you help me?","what are you capable of?"],
+    "responses":["WIP"]
+    }
+]}
