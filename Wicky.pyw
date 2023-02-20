@@ -2,7 +2,7 @@ import tkinter as tk
 import json
 import random
 import customtkinter as CTk
-
+from tkinter import messagebox
 version = '0.10'
 app = CTk.CTk()
 app.configure(bg="#D1FFF3")
@@ -50,10 +50,11 @@ def get_response(event=None):
 
     
 
-#TODO: Add a confirmation message when pressing the button
 def clear_all():
-    response_text.delete("1.0", "end")
-    user_input_field.delete(0, "end")
+    is_ok = messagebox.askokcancel(title='Clear All?', message="Are you sure you want to clear the response and the input text fields?")
+    if is_ok:
+        response_text.delete("1.0", "end")
+        user_input_field.delete(0, "end")
 
 
 def show_commands():
@@ -73,6 +74,8 @@ def feeling_lucky():
         else:
             user_input_field.delete(0, "end")
             user_input_field.insert(0, command)
+
+
 def export_chatlog():
     log=response_text.get("1.0", "end-1c")
     print(log)

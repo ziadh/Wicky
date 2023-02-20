@@ -13,7 +13,7 @@
     },
     {"tag": "name",
     "patterns":["what is your name","what should i call you","whats your name?","who are you?","Can you tell me what is your name?"],
-    "responses":["I am 20 years old in robot age!","I am 20 and I enjoy learning new things."]
+    "responses":["My name is Wicky!","Name is Wicky and I am guilty of stealing hearts <3."]
     },
     {"tag": "services",
     "patterns":["what can you do for me?","what do you offer?","how can you help me?","what are you capable of?"],
