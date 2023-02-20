@@ -9,7 +9,7 @@ app.configure(bg="#D1FFF3")
 app.title(f"Wicky v{version}")
 app.geometry('500x510')
 app.resizable(False, False)
-response_text = CTk.CTkTextbox(app, width=420, height=420)
+response_text = CTk.CTkTextbox(app, width=420, height=420,state='disabled')
 response_text.place(x=50, y=10)
 
 with open('responses.json') as json_file:
@@ -23,6 +23,7 @@ def submit():
 
 
 def get_response(event=None):
+    response_text.configure(state='normal')
     user_input = user_input_field.get()
     response_text.insert("end", "You: " + user_input + "\n\n" + "Wicky: ")
     user_input_field.delete(0, "end")
@@ -39,7 +40,9 @@ def get_response(event=None):
         response_text.after(50)
 
     response_text.insert(
-        "end", "\n-----------------------------------------------------------------------------------------------------\n")
+        "end", "\n\n-----------------------------------------------------------------------------------------------------\n\n")
+    response_text.configure(state='disabled')
+    
 
 
 def clear_all():

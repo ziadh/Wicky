@@ -1,10 +1,10 @@
 {"intents": [
     {"tag": "greatings",
-    "patterns":["hello","hey","hi","good day","Greetings","what's up?","how is it going?"],
+    "patterns":["hello","hey","hi","good day","greetings","what's up?","how is it going?"],
     "responses":["Hello!","Hey!","What can I do for you?"]
     },
     {"tag": "goodbye",
-    "patterns":["cya","see you later","goodbye","I am leaving","Have a good day","bye?","cao","see ya"],
+    "patterns":["cya","see you later","goodbye","I am leaving","have a good day","bye?","cao","see ya"],
     "responses":["Sad to see you go :(","Talk to you later!","Goodbye!"]
     },
     {"tag": "age",
@@ -16,7 +16,7 @@
     "responses":["I am 20 years old in robot age!","I am 20 and I enjoy learning new things"]
     },
     {"tag": "hours",
-    "patterns":["when are you guys open","what are your hours","hours of operation?"],
+    "patterns":["when are you guys open","what are your hours","hours of operation?","when are you available"],
     "responses":["24/7/365"]
     },
     {"tag": "services",
