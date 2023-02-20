@@ -13,14 +13,10 @@
     },
     {"tag": "name",
     "patterns":["what is your name","what should i call you","whats your name?","who are you?","Can you tell me what is your name?"],
-    "responses":["I am 20 years old in robot age!","I am 20 and I enjoy learning new things"]
-    },
-    {"tag": "hours",
-    "patterns":["when are you guys open","what are your hours","hours of operation?","when are you available"],
-    "responses":["24/7/365"]
+    "responses":["I am 20 years old in robot age!","I am 20 and I enjoy learning new things."]
     },
     {"tag": "services",
     "patterns":["what can you do for me?","what do you offer?","how can you help me?","what are you capable of?"],
-    "responses":["WIP"]
+    "responses":["WIP."]
     }
 ]}

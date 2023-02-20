@@ -24,6 +24,9 @@ def submit():
 
 def get_response(event=None):
     response_text.configure(state='normal')
+    send_button.configure(state='disabled')
+    export_chatlog_button.configure(state='disabled')
+
     user_input = user_input_field.get()
     response_text.insert("end", "You: " + user_input + "\n\n" + "Wicky: ")
     user_input_field.delete(0, "end")
@@ -42,6 +45,9 @@ def get_response(event=None):
     response_text.insert(
         "end", "\n\n-----------------------------------------------------------------------------------------------------\n\n")
     response_text.configure(state='disabled')
+    send_button.configure(state='normal')
+    export_chatlog_button.configure(state='normal')
+
     
 
 #TODO: Add a confirmation message when pressing the button
@@ -54,15 +60,27 @@ def show_commands():
     pass
 
 def feeling_lucky():
-    pass
-
+    with open('responses.json') as f:
+        data=json.load(f)
+        commands = []
+        for intent in data['intents']:
+            for pattern in intent['patterns']:
+                commands.append(pattern)
+        command = random.choice(commands)
+        users = user_input_field.get()
+        if users == "":
+            user_input_field.insert('end',command)
+        else:
+            user_input_field.delete(0, "end")
+            user_input_field.insert(0, command)
 def export_chatlog():
-    pass
+    log=response_text.get("1.0", "end-1c")
+    print(log)
 
 user_input_field = CTk.CTkEntry(app, width=280)
 user_input_field.bind("<Return>", get_response)
 user_input_field.place(x=120, y=450)
-send_button = CTk.CTkButton(app, text="Send", command=submit, width=50)
+send_button = CTk.CTkButton(app, text='Send', command=submit, width=50)
 send_button.place(x=420, y=450)
 clear_button = CTk.CTkButton(app, text="Clear", command=clear_all, width=50)
 clear_button.place(x=50, y=450)
@@ -71,7 +89,7 @@ commands_button.place(x=50,y=490)
 feeling_lucky_button = CTk.CTkButton(app,text="I'm Feeling Lucky!", command = feeling_lucky, width = 50)
 feeling_lucky_button.place(x=160,y=490)
 export_chatlog_button = CTk.CTkButton(app,text="Export Chat Log", command = export_chatlog, width = 50)
-export_chatlog_button.place(x=280,y=490)
+export_chatlog_button.place(x=285,y=490)
 exit_button = CTk.CTkButton(app,text="Exit", command = exit, width = 50)
 exit_button.place(x=400,y=490)
 
