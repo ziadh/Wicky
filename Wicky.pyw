@@ -5,6 +5,8 @@ import customtkinter as CTk
 from tkinter import messagebox
 import datetime
 
+import selenium
+
 
 with open('src/settings.json','r')as f:
     settings=json.load(f)
@@ -35,32 +37,35 @@ def submit():
 
 
 def get_response(event=None):
-    response_text.configure(state='normal')
-    send_button.configure(state='disabled')
-    export_chatlog_button.configure(state='disabled')
-    clear_button.configure(state='disabled')
-
+    
     user_input = user_input_field.get()
-    response_text.insert("end", "You: " + user_input + "\n\n" + "Wicky: ")
-    user_input_field.delete(0, "end")
-    response = "I'm sorry, I don't understand what you're saying."
+    if user_input == '':
+        empty_input = messagebox.showinfo('Empty request','Please type your request in the text field to the left.')
+    else:
+        send_button.configure(state='disabled')
+        export_chatlog_button.configure(state='disabled')
+        clear_button.configure(state='disabled')
+        response_text.configure(state='normal')
+        response_text.insert("end", "You: " + user_input + "\n\n" + "Wicky: ")
+        user_input_field.delete(0, "end")
+        response = "I'm sorry, I don't understand what you're saying."
 
-    for intent in intents['intents']:
-        if user_input.lower() in intent['patterns']:
-            response = random.choice(intent['responses'])
-            break
+        for intent in intents['intents']:
+            if user_input.lower() in intent['patterns']:
+                response = random.choice(intent['responses'])
+                break
 
-    for i, c in enumerate(response):
-        response_text.insert("end", c)
-        response_text.update()
-        response_text.after(50)
+        for i, c in enumerate(response):
+            response_text.insert("end", c)
+            response_text.update()
+            response_text.after(50)
 
-    response_text.insert(
-        "end", "\n\n-----------------------------------------------------------------------------------------------------\n\n")
-    response_text.configure(state='disabled')
-    send_button.configure(state='normal')
-    export_chatlog_button.configure(state='normal')
-    clear_button.configure(state='normal')
+        response_text.insert(
+            "end", "\n\n-----------------------------------------------------------------------------------------------------\n\n")
+        response_text.configure(state='disabled')
+        send_button.configure(state='normal')
+        export_chatlog_button.configure(state='normal')
+        clear_button.configure(state='normal')
 
     
 
@@ -100,7 +105,7 @@ def export_chatlog():
         empty_box = messagebox.showinfo('Empty textbox', 'Nothing to be exported.')
     else:
         now = datetime.datetime.now()
-        filename=f"chatlog_{now.strftime('%m-%d-%Y_%H-%M-%S')}.txt"
+        filename=f"chat_logs/chatlog_{now.strftime('%m-%d-%Y_%H-%M-%S')}.txt"
         with open(filename, 'w')as f:
             f.write(log)
         print(f'Chat log saved to {filename}')
@@ -127,13 +132,14 @@ def toggle_theme():
         
 
 user_input_field = CTk.CTkEntry(app, width=280)
+user_input_field.focus()
 user_input_field.bind("<Return>", get_response)
 user_input_field.place(x=120, y=450)
 listen_button = CTk.CTkButton(app,text='\U0001F3A4',command= listen_and_write,width=20)
 listen_button.place(x=405, y=450)
 send_button = CTk.CTkButton(app, text='\u21e8', command=submit, width=20)
 send_button.place(x=440, y=450)
-clear_button = CTk.CTkButton(app, text="Clear", command=clear_all, width=50)
+clear_button = CTk.CTkButton(app, text="Clear All", command=clear_all, width=50)
 clear_button.place(x=50, y=450)
 commands_button = CTk.CTkButton(app,text="What Can I Do?", command = show_commands, width = 50)
 commands_button.place(x=50,y=490)

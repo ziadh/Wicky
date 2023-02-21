@@ -12,7 +12,7 @@
     "responses":["I am 20 years in robot age!","I am 20 and I enjoy learning new things"]
     },
     {"tag": "name",
-    "patterns":["what is your name","what should i call you","whats your name?","who are you?","Can you tell me what is your name?"],
+    "patterns":["what is your name","what should i call you","whats your name?","who are you?","can you tell me what is your name?"],
     "responses":["My name is Wicky!","Name is Wicky and I am guilty of stealing hearts <3."]
     },
     {"tag": "services",
