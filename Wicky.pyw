@@ -3,6 +3,9 @@ import json
 import random
 import customtkinter as CTk
 from tkinter import messagebox
+import datetime
+
+
 version = '0.10'
 app = CTk.CTk()
 app.configure(bg="#D1FFF3")
@@ -26,6 +29,7 @@ def get_response(event=None):
     response_text.configure(state='normal')
     send_button.configure(state='disabled')
     export_chatlog_button.configure(state='disabled')
+    clear_button.configure(state='disabled')
 
     user_input = user_input_field.get()
     response_text.insert("end", "You: " + user_input + "\n\n" + "Wicky: ")
@@ -47,14 +51,18 @@ def get_response(event=None):
     response_text.configure(state='disabled')
     send_button.configure(state='normal')
     export_chatlog_button.configure(state='normal')
+    clear_button.configure(state='normal')
 
     
 
 def clear_all():
     is_ok = messagebox.askokcancel(title='Clear All?', message="Are you sure you want to clear the response and the input text fields?")
     if is_ok:
+        response_text.configure(state='normal')
+
         response_text.delete("1.0", "end")
         user_input_field.delete(0, "end")
+        response_text.configure(state='disabled')
 
 
 def show_commands():
@@ -65,8 +73,9 @@ def feeling_lucky():
         data=json.load(f)
         commands = []
         for intent in data['intents']:
-            for pattern in intent['patterns']:
-                commands.append(pattern)
+            if intent['tag'] not in ['greetings','goodbye']:
+                for pattern in intent['patterns']:
+                    commands.append(pattern)
         command = random.choice(commands)
         users = user_input_field.get()
         if users == "":
@@ -78,7 +87,11 @@ def feeling_lucky():
 
 def export_chatlog():
     log=response_text.get("1.0", "end-1c")
-    print(log)
+    now = datetime.datetime.now()
+    filename=f"chatlog_{now.strftime('%m-%d-%Y_%H-%M-%S')}.txt"
+    with open(filename, 'w')as f:
+        f.write(log)
+    print(f'Chat log saved to {filename}')
 
 user_input_field = CTk.CTkEntry(app, width=280)
 user_input_field.bind("<Return>", get_response)
