@@ -4,8 +4,7 @@ import random
 import customtkinter as CTk
 from tkinter import messagebox
 import datetime
-
-import selenium
+import speech_recognition as sr
 
 
 with open('src/settings.json','r')as f:
@@ -37,8 +36,8 @@ def submit():
 
 
 def get_response(event=None):
-    
     user_input = user_input_field.get()
+    user_input_field.delete(0,"end")
     if user_input == '':
         empty_input = messagebox.showinfo('Empty request','Please type your request in the text field to the left.')
     else:
@@ -82,6 +81,7 @@ def clear_all():
 def show_commands():
     pass
 
+#TODO: Better filtering of feeling lucky
 def feeling_lucky():
     with open('src/responses.json') as f:
         data=json.load(f)
@@ -98,7 +98,23 @@ def feeling_lucky():
             user_input_field.delete(0, "end")
             user_input_field.insert(0, command)
 
-
+def voice_recognition():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio_text = r.listen(source)
+    try:
+        transcribed_text = r.recognize_google(audio_text)
+        user_input_field.configure(state='normal')
+        user_input_field.delete(0, "end")
+        user_input_field.insert(tk.END, transcribed_text)
+    except sr.UnknownValueError:
+        user_input_field.configure(state='normal')
+        user_input_field.delete(0, "end")
+        user_input_field.insert(tk.END, 'Could not understand audio. Please Try again.')
+    except sr.RequestError as e:
+        user_input_field.configure(state='normal')
+        user_input_field.delete(0, "end")
+        user_input_field.insert(tk.END, 'Not able to request data. Please Try again.')
 def export_chatlog():
     log=response_text.get("1.0", "end-1c")
     if log =='':
@@ -111,8 +127,6 @@ def export_chatlog():
         print(f'Chat log saved to {filename}')
 
 
-def listen_and_write():
-    pass
 
 def toggle_theme():
     with open('src/settings.json','r')as f:
@@ -135,7 +149,7 @@ user_input_field = CTk.CTkEntry(app, width=280)
 user_input_field.focus()
 user_input_field.bind("<Return>", get_response)
 user_input_field.place(x=120, y=450)
-listen_button = CTk.CTkButton(app,text='\U0001F3A4',command= listen_and_write,width=20)
+listen_button = CTk.CTkButton(app,text='\U0001F3A4',command= voice_recognition,width=20)
 listen_button.place(x=405, y=450)
 send_button = CTk.CTkButton(app, text='\u21e8', command=submit, width=20)
 send_button.place(x=440, y=450)
