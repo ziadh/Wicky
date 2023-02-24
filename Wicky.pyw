@@ -60,13 +60,11 @@ def get_response(event=None):
             response_text.after(50)
 
         response_text.insert(
-            "end", "\n\n-----------------------------------------------------------------------------------------------------\n\n")
+            "end", "\n\n"+"-"*101+"\n\n")
         response_text.configure(state='disabled')
         send_button.configure(state='normal')
         export_chatlog_button.configure(state='normal')
         clear_button.configure(state='normal')
-
-    
 
 def clear_all():
     is_ok = messagebox.askokcancel(title='Clear All?', message="Are you sure you want to clear the response and the input text fields?")
